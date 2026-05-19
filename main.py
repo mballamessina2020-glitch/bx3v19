@@ -625,7 +625,7 @@ def _demo_matches(date: str) -> List[MatchResponse]:
     ]
 
 def _compute_vadigo(fixture_id: str, fix_data: dict) -> AnalysisResponse:
-    rng = random.Random(int(fixture_id.replace("demo-","").replace("-","")[:8] or 42, 16) if all(c in "0123456789abcdef" else "x" for c in fixture_id[:8].lower()) else hash(fixture_id) % 10000)
+    rng = random.Random(int(fixture_id.replace("demo-","").replace("-","")[:8] or "42", 16) if all(c in "0123456789abcdef" for c in fixture_id.replace("demo-","").replace("-","")[:8].lower()) else hash(fixture_id) % 10000)
 
     # ── Probabilités de base (pondérées par les modèles)
     p_home_raw = rng.uniform(0.30, 0.58)

@@ -625,18 +625,15 @@ def _demo_matches(date: str) -> List[MatchResponse]:
     ]
 
 def _compute_vadigo(fixture_id: str, fix_data: dict) -> AnalysisResponse:
-    # 1. On nettoie l'ID pour ne garder que la partie utile
-    clean_id = fixture_id.replace("demo-", "").replace("-", "")[:8]
+    # On nettoie l'ID de toute présence de "demo-" ou de tirets
+    clean_id = str(fixture_id).replace("demo-", "").replace("-", "").strip()
 
-    # 2. On vérifie si ce qui reste est un code hexadécimal valide
-    is_hex = all(c in "0123456789abcdef" for c in clean_id.lower()) if clean_id else False
-
-    if is_hex:
-        # Si c'est du hex, on le convertit en nombre
-        seed = int(clean_id, 16)
+    # Si l'ID est composé uniquement de chiffres (cas de vos API de foot)
+    if clean_id.isdigit():
+        seed = int(clean_id)
+    # Si l'ID contient des lettres (ou est vide), on utilise le hash de sécurité
     else:
-        # Sinon (ou si c'est vide), on se rabat sur le hash de l'ID d'origine
-        seed = hash(fixture_id) % 10000
+        seed = hash(clean_id) % 10000 if clean_id else 42
 
     rng = random.Random(seed)
 

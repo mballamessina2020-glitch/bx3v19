@@ -15,10 +15,10 @@ app = FastAPI(title="BX3 Backend Ω", version="2.0.0", docs_url="/docs")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 # ── CLÉS (env vars sur Render — jamais dans l'APK)
-APIFOOTBALL_KEY  = os.getenv("APIFOOTBALL_KEY",  "5a9b57e9506b5c0bba3089a18dd309da")
-ODDS_API_KEY     = os.getenv("ODDS_API_KEY",     "4865be3ee6aa31308d05ab9e90022cc481f6f4853eebd254ce25497c31898fa1")
-FOOTBALLDATA_KEY = os.getenv("FOOTBALLDATA_KEY", "5f3849cc0b314ac29ee6613efc24bf10")
-SPORTMONKS_KEY   = os.getenv("SPORTMONKS_KEY",   "0tS9UyNiMOv0JDXMCRFmMLo1IFc8Sv62XjZAOuHJhky53mFBVx44Z2l4DLPv")
+APIFOOTBALL_KEY  = os.getenv("APIFOOTBALL_KEY",  "9ee71b3b8805a94dfad5a819f28f2281")
+ODDS_API_KEY     = os.getenv("ODDS_API_KEY",     "11f2b69ab3b9f769579047976d30498c")
+FOOTBALLDATA_KEY = os.getenv("FOOTBALLDATA_KEY", "jMeMekq6cinJindtlF21Cx4EmoxwfZOhpIPJLaNamWmozxTqiRAJkN0EiEBR")
+SPORTMONKS_KEY   = os.getenv("SPORTMONKS_KEY",   "v139voCJIKSknpdr1c6BQ4K55IHDaVSmYro00RKPyChOx2Vn4ZQs1mEHPHQB")
 BX3_SECRET       = os.getenv("BX3_SECRET",       "BX3FamilleEtoh2026SecretKey")
 
 def verify_token(x_bx3_token: str = Header(None)):

@@ -625,8 +625,20 @@ def _demo_matches(date: str) -> List[MatchResponse]:
     ]
 
 def _compute_vadigo(fixture_id: str, fix_data: dict) -> AnalysisResponse:
-    rng = random.Random(int(fixture_id.replace("demo-","").replace("-","")[:8] or "42", 16) if all(c in "0123456789abcdef" for c in fixture_id.replace("demo-","").replace("-","")[:8].lower()) else hash(fixture_id) % 10000)
+    # 1. On nettoie l'ID pour ne garder que la partie utile
+clean_id = fixture_id.replace("demo-", "").replace("-", "")[:8]
 
+# 2. On vérifie si ce qui reste est un code hexadécimal valide
+is_hex = all(c in "0123456789abcdef" for c in clean_id.lower()) if clean_id else False
+
+if is_hex:
+    # Si c'est du hex, on le convertit en nombre
+    seed = int(clean_id, 16)
+else:
+    # Sinon (ou si c'est vide), on se rabat sur le hash de l'ID d'origine
+    seed = hash(fixture_id) % 10000
+
+rng = random.Random(seed)
     # ── Probabilités de base (pondérées par les modèles)
     p_home_raw = rng.uniform(0.30, 0.58)
     p_draw_raw = rng.uniform(0.18, 0.28)
